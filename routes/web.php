@@ -19,4 +19,8 @@ Route::get('/', function () {
 
 Route::get('/login', function () {
     return view('login.index');
-});
+})->name('login.index');
+
+Route::get('/reset-password', function () {
+    return view('reset-password.index');
+})->name('reset-password.index');
