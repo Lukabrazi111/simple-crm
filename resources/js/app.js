@@ -10,10 +10,8 @@ window.dropDownMenu = function () {
 menu.addEventListener('click', function (e) {
     e.preventDefault();
 
-    if (e.target) {
-        if (!menu.classList.contains('hidden')) {
-            menu.classList.add('hidden');
-        }
+    if (!menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
     }
 })
 
