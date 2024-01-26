@@ -89,7 +89,28 @@
         </div>
     </div>
 </aside>
-
+<header class="flex items-center justify-end bg-white py-5 px-20 w-full">
+    <div class="flex items-center justify-center space-x-5 relative">
+        <a href="#" class="cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#222222" class="bi bi-bell-fill"
+                 viewBox="0 0 16 16">
+                <path
+                    d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"/>
+            </svg>
+        </a>
+        <button class="cursor-pointer" onclick="dropDownMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="#222222" class="bi bi-person-fill"
+                 viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+            </svg>
+        </button>
+        <div id="dropdown-menu"
+             class="hidden absolute flex top-10 right-0 flex-col items-center bg-white border-gray-900 w-40 text-gray-700 border justify-start dropdown-menu">
+            <a href="#" class="self-start py-3 px-5 w-full hover:bg-gray-300 border-b border-gray-900">Profile</a>
+            <a href="#" class="self-start py-3 px-5 w-full hover:bg-gray-300">Logout</a>
+        </div>
+    </div>
+</header>
 {{ $slot }}
 
 </body>
