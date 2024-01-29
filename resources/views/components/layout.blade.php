@@ -14,7 +14,7 @@
         <div class="text-2xl font-normal mb-2 pb-2 text-white text-center">CRM</div>
         <ul class="space-y-2 font-medium flex flex-col flex-1">
             <li>
-                <a href="#"
+                <a href="{{ route('home') }}"
                    class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#cccc" class="bi bi-house"
                          viewBox="0 0 16 16">
@@ -25,7 +25,7 @@
                 </a>
             </li>
             <li>
-                <a href="#"
+                <a href="{{ route('users') }}"
                    class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#cccc" class="bi bi-people"
                          viewBox="0 0 16 16">
@@ -36,7 +36,7 @@
                 </a>
             </li>
             <li>
-                <a href="#"
+                <a href="{{ route('clients') }}"
                    class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#cccc"
                          class="bi bi-person-vcard" viewBox="0 0 16 16">
@@ -49,7 +49,7 @@
                 </a>
             </li>
             <li>
-                <a href="#"
+                <a href="{{ route('projects') }}"
                    class="flex items-center p-2 text-white rounded-lg dark:text-white hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#cccc"
                          class="bi bi-file-earmark" viewBox="0 0 16 16">
@@ -91,7 +91,7 @@
 </aside>
 <header class="flex items-center justify-end bg-white py-5 px-20 w-full">
     <div class="flex items-center justify-center space-x-5 relative">
-        <a href="#" class="cursor-pointer">
+        <a href="{{ route('notifications') }}" class="cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#222222" class="bi bi-bell-fill"
                  viewBox="0 0 16 16">
                 <path
@@ -105,14 +105,16 @@
             </svg>
         </button>
         <div id="dropdown-menu"
-             class="hidden absolute flex top-10 right-0 flex-col items-center bg-white border-gray-900 w-40 text-gray-700 border justify-start dropdown-menu">
+             class="hidden absolute flex top-10 right-0 flex-col items-center bg-white border-gray-900 w-40 text-gray-700 border justify-start dropdown-menu z-50">
             <a href="#" class="self-start py-3 px-5 w-full hover:bg-gray-300 border-b border-gray-900">Profile</a>
             <a href="#" class="self-start py-3 px-5 w-full hover:bg-gray-300">Logout</a>
         </div>
     </div>
 </header>
 
-{{ $slot }}
+<div class="ml-60 py-10 px-20">
+    {{ $slot }}
+</div>
 
 </body>
 </html>
