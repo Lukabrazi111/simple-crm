@@ -1,6 +1,19 @@
 <x-unauthotized-layout>
     <div class="w-full flex flex-col justify-center items-center h-screen">
-        <form class="bg-white shadow-2xl rounded border px-8 pt-6 pb-8 mb-4 w-full max-w-lg">
+        <form action="{{ route('reset-password') }}" method="POST"
+              class="bg-white shadow-2xl rounded border px-8 pt-6 pb-8 mb-4 w-full max-w-lg">
+            @csrf
+
+            @if(session()->has('success'))
+                <div
+                    class="bg-green-400 py-2 px-4 text-center mb-4 font-medium text-white rounded">{{ session()->get('success') }}
+                </div>
+            @elseif(session()->has('error'))
+                <div
+                    class="bg-green-400 py-2 px-4 text-center mb-4 font-medium text-white rounded">{{ session()->get('error') }}
+                </div>
+            @endif
+
             <div class="mb-6">
                 <a href="{{ route('login') }}" class="flex items-center">
                     <svg clip-rule="evenodd" fill-rule="evenodd" width="25" stroke-linejoin="round"
@@ -20,7 +33,9 @@
                 <input
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="email" type="text" placeholder="E-Mail Address" name="email">
-                {{-- <p class="text-red-500 text-xs italic">Please choose a password.</p> --}}
+                @error('email')
+                <p class="text-red-500 text-xs italic mt-2">{{ $message }}</p>
+                @enderror
             </div>
             <div class="flex items-center justify-between">
                 <button
