@@ -14,38 +14,22 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-require __DIR__ . '/auth/auth.php';
+Route::middleware('guest')->group(function () {
+    require __DIR__ . '/auth.php';
+});
 
 // Authorized user's route
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    require __DIR__ . '/users/user.php';
+    require __DIR__ . '/user.php';
 
-    Route::get('/clients', function () {
-        return view('clients.index');
-    })->name('clients');
+    require __DIR__ . '/client.php';
 
-    Route::get('/clients/create', function () {
-        return view('clients.create');
-    })->name('clients.create');
+    require __DIR__ . '/project.php';
 
-    Route::get('/projects', function () {
-        return view('projects.index');
-    })->name('projects');
+    require __DIR__ . '/task.php';
 
-    Route::get('/projects/create', function () {
-        return view('projects.create');
-    })->name('projects.create');
-
-    Route::get('/tasks', function () {
-        return view('tasks.index');
-    })->name('tasks'); // WINDOWS
-
-    Route::get('/tasks/create', function () {
-        return view('tasks.create');
-    })->name('tasks.create');
 
     Route::get('/notifications', function () {
         return view('notifications.index');
