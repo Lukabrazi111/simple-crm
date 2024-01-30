@@ -51,6 +51,14 @@ Route::get('/projects/create', function () {
     return view('projects.create');
 })->name('projects.create');
 
+Route::get('/tasks', function () {
+    return view('tasks.index');
+})->name('tasks');
+
+Route::get('/tasks/create', function () {
+    return view('tasks.create');
+})->name('tasks.create');
+
 Route::get('/notifications', function () {
     return view('notifications.index');
 })->name('notifications');

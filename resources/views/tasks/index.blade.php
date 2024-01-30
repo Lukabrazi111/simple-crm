@@ -1,17 +1,18 @@
 <x-layout>
     <div class="mb-8">
-        <a href="{{ route('users.create') }}" class="bg-green-600 py-2 px-5 rounded text-white font-medium">Create
-            user</a>
+        <a href="{{ route('tasks.create') }}" class="bg-green-600 py-2 px-5 rounded text-white font-medium">Create
+            task</a>
     </div>
     <div class="relative overflow-x-auto">
         <div class="bg-white py-3 px-5 border-b border-gray-600 text-gray-800 font-medium">
-            Users list
+            Tasks list
             <div class="flex items-center justify-end py-5">
+                <!-- Dropdown menu -->
                 <x-dropdown.option
                     :id-tag="'status'"
                     :label="'Show deleted:'"
-                    :selected="'Choose'"
-                    :data="['Yes', 'No']"
+                    :selected="'All'"
+                    :data="['Open', 'Completed']"
                 />
             </div>
         </div>
@@ -22,19 +23,19 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    ID
+                    Title
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    First name
+                    Assigned to
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Last name
+                    Client
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Email
+                    Deadline
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Role
+                    Status
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Actions
@@ -44,19 +45,19 @@
             <tbody>
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple MacBook Pro 17"
+                    <a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, illum.</a>
                 </th>
                 <td class="px-6 py-4">
-                    Silver
+                    Kariane
                 </td>
                 <td class="px-6 py-4">
-                    Laptop
+                    Client
                 </td>
                 <td class="px-6 py-4">
-                    $2999
+                    2024-03-09
                 </td>
                 <td class="px-6 py-4">
-                    Admin
+                    open
                 </td>
                 <td class="px-6 py-4">
                     <form action="#" method="POST">

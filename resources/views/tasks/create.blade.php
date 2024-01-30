@@ -1,7 +1,7 @@
 <x-layout>
     <div class="relative overflow-x-auto">
-        <div class="bg-white py-3 px-5 border-b mb-4 text-gray-800 font-medium rounded">
-            <p class="border-b mb-2 pb-2 text-xl">Create project</p>
+        <div class="bg-white py-3 px-5 border-b mb-2 text-gray-800 font-medium">
+            <p class="border-b mb-2 pb-2 text-xl">Create task</p>
 
             <form action="#" method="POST" class="mt-4">
                 <div class="mb-5">
@@ -26,7 +26,7 @@
                 </div>
                 <x-dropdown.option
                     :id-tag="'users'"
-                    :label="'Assigned user:'"
+                    :label="'Assigned user'"
                     :selected="'Choose a user'"
                     :data="['user1', 'user2', 'user3']"
                 />
@@ -35,6 +35,12 @@
                     :label="'Assigned client'"
                     :selected="'Choose a client'"
                     :data="['client1', 'client2', 'client3']"
+                />
+                <x-dropdown.option
+                    :id-tag="'projects'"
+                    :label="'Assigned project'"
+                    :selected="'Choose a project'"
+                    :data="['Benefit Clarity', 'Basic authorization / registration']"
                 />
                 <x-dropdown.option
                     :id-tag="'status'"
@@ -47,6 +53,7 @@
                     Save
                 </button>
             </form>
+
         </div>
     </div>
 </x-layout>
