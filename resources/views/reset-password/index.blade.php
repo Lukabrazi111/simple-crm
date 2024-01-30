@@ -2,7 +2,7 @@
     <div class="w-full flex flex-col justify-center items-center h-screen">
         <form class="bg-white shadow-2xl rounded border px-8 pt-6 pb-8 mb-4 w-full max-w-lg">
             <div class="mb-6">
-                <a href="{{ route('login.index') }}" class="flex items-center">
+                <a href="{{ route('login') }}" class="flex items-center">
                     <svg clip-rule="evenodd" fill-rule="evenodd" width="25" stroke-linejoin="round"
                          stroke-miterlimit="2"
                          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,49 +18,47 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/login', function () {
     return view('login.index');
-})->name('login.index');
+})->name('login');
 
 Route::get('/reset-password', function () {
     return view('reset-password.index');
 })->name('reset-password.index');
 
 // Authorized user's route
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/users', function () {
-    return view('users.index');
-})->name('users');
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/users', 'index')->name('users');
+        Route::get('/users/create', 'create')->name('users.create');
+    });
 
-Route::get('/users/create', function () {
-    return view('users.create');
-})->name('users.create');
+    Route::get('/clients', function () {
+        return view('clients.index');
+    })->name('clients');
 
-Route::get('/clients', function () {
-    return view('clients.index');
-})->name('clients');
+    Route::get('/clients/create', function () {
+        return view('clients.create');
+    })->name('clients.create');
 
-Route::get('/clients/create', function () {
-    return view('clients.create');
-})->name('clients.create');
+    Route::get('/projects', function () {
+        return view('projects.index');
+    })->name('projects');
 
-Route::get('/projects', function () {
-    return view('projects.index');
-})->name('projects');
+    Route::get('/projects/create', function () {
+        return view('projects.create');
+    })->name('projects.create');
 
-Route::get('/projects/create', function () {
-    return view('projects.create');
-})->name('projects.create');
+    Route::get('/tasks', function () {
+        return view('tasks.index');
+    })->name('tasks');
 
-Route::get('/tasks', function () {
-    return view('tasks.index');
-})->name('tasks');
+    Route::get('/tasks/create', function () {
+        return view('tasks.create');
+    })->name('tasks.create');
 
-Route::get('/tasks/create', function () {
-    return view('tasks.create');
-})->name('tasks.create');
+    Route::get('/notifications', function () {
+        return view('notifications.index');
+    })->name('notifications');
+});
 
-Route::get('/notifications', function () {
-    return view('notifications.index');
-})->name('notifications');
