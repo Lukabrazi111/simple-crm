@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,25 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthController::class, 'index'])->name('login');
-
-    Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
-
-    Route::get('/reset-password', function () {
-        return view('reset-password.index');
-    })->name('reset-password.index');
-});
+require __DIR__ . '/auth/auth.php';
 
 // Authorized user's route
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    Route::controller(UserController::class)->group(function () {
-        Route::get('/users', 'index')->name('users');
-        Route::get('/users/create', 'create')->name('users.create');
-    });
+    require __DIR__ . '/users/user.php';
 
     Route::get('/clients', function () {
         return view('clients.index');
@@ -54,7 +41,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/tasks', function () {
         return view('tasks.index');
-    })->name('tasks');
+    })->name('tasks'); // WINDOWS
 
     Route::get('/tasks/create', function () {
         return view('tasks.create');
