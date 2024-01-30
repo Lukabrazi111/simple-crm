@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -16,13 +17,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/login', function () {
-    return view('login.index');
-})->name('login');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'index'])->name('login');
 
-Route::get('/reset-password', function () {
-    return view('reset-password.index');
-})->name('reset-password.index');
+    Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+
+    Route::get('/reset-password', function () {
+        return view('reset-password.index');
+    })->name('reset-password.index');
+});
 
 // Authorized user's route
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
@@ -60,5 +63,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/notifications', function () {
         return view('notifications.index');
     })->name('notifications');
+
+    Route::get('/sanctum-api-token', function () {
+        return auth()->user()->tokens()->first()->token;
+    });
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
 
