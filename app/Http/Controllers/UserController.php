@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -9,9 +10,13 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('users.index');
+        $status = $request->get('user_status', 'all');
+
+        $users = User::filterUserByDelete($status)->get();
+
+        return view('users.index', ['users' => $users]);
     }
 
     /**
@@ -41,9 +46,9 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('users.update', ['user' => $user]);
     }
 
     /**

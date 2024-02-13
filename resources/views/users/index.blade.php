@@ -42,40 +42,42 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Apple MacBook Pro 17"
-                </th>
-                <td class="px-6 py-4">
-                    Silver
-                </td>
-                <td class="px-6 py-4">
-                    Laptop
-                </td>
-                <td class="px-6 py-4">
-                    $2999
-                </td>
-                <td class="px-6 py-4">
-                    Admin
-                </td>
-                <td class="px-6 py-4">
-                    <form action="#" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="space-x-2">
-                            <a
-                                href="#"
-                                class="bg-blue-600 text-white px-6 py-2 rounded font-medium hover:bg-blue-700">Edit
-                            </a>
-                            <a
-                                href="#"
-                                id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal"
-                                class="bg-red-600 text-white px-6 py-2 rounded font-medium hover:bg-red-700">Delete
-                            </a>
+            @foreach($users as $user)
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ $user->id }}
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ $user->first_name }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $user->last_name }}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ $user->email }}
+                    </td>
+                    <td class="px-6 py-4">
+                        user
+                    </td>
+                    <td class="px-6 py-4">
+                        <div>
+                            <div class="space-x-2">
+                                <a
+                                    href="{{ route('users.edit', $user->id) }}"
+                                    class="bg-blue-600 text-white px-6 py-2 rounded font-medium hover:bg-blue-700">Edit
+                                </a>
+                                {{-- TODO: add delete user functionality --}}
+                                <a
+                                    href="#"
+                                    id="deleteButton" data-modal-target="deleteModal" data-modal-toggle="deleteModal"
+                                    class="bg-red-600 text-white px-6 py-2 rounded font-medium hover:bg-red-700">Delete
+                                </a>
+                            </div>
                         </div>
-                    </form>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            @endforeach
+
             </tbody>
         </table>
 

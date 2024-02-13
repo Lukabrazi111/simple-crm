@@ -33,11 +33,18 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
+    // Users controller
     Route::controller(UserController::class)->group(function () {
         Route::get('/users', 'index')->name('users');
+
         Route::get('/users/create', 'create')->name('users.create');
+        Route::post('/users/create', 'store')->name('users.store');
+
+        Route::get('/users/update/{user}', 'edit')->name('users.edit');
+        Route::post('/users/update/{user}', 'update')->name('users.update');
     });
 
+    // Clients controller
     Route::get('/clients', function () {
         return view('clients.index');
     })->name('clients');

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -48,6 +49,15 @@ class User extends Authenticatable
         'password' => 'hashed',
         'terms_accepted' => 'boolean',
     ];
+
+    public function scopeFilterUserByDelete(Builder $query, string $status)
+    {
+        if ($status === 'deleted') {
+            return $query->onlyTrashed();
+        }
+
+        return $query;
+    }
 
     protected function fullName(): Attribute
     {
