@@ -3,6 +3,11 @@
         <a href="{{ route('users.create') }}" class="bg-green-600 py-2 px-5 rounded text-white font-medium">Create
             user</a>
     </div>
+    @if(session()->has('success'))
+        <div
+            class="bg-green-400 py-1 text-center mb-4 font-medium text-white">{{ session()->get('success') }}
+        </div>
+    @endif
     <div class="relative overflow-x-auto">
         <div class="bg-white py-3 px-5 border-b border-gray-600 text-gray-800 font-medium">
             Users list

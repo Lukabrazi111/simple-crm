@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -20,19 +21,24 @@ class UserController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     */
+    public function store(UserStoreRequest $request)
+    {
+        $validated = $request->validated();
+        $validated['terms_accepted'] = true;
+
+        $user = User::create($validated);
+
+        return redirect()->route('users')->with('success', __('users.created', ['email' => $user->email]));
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
         return view('users.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
