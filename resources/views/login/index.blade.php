@@ -47,7 +47,7 @@
                     Sign In
                 </button>
                 <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-                   href="{{ route('reset-password.create') }}">
+                   href="{{ route('send-reset-password.create') }}">
                     Forgot Password?
                 </a>
             </div>

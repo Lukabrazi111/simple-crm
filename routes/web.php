@@ -22,10 +22,11 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
     // Reset password
-    Route::get('/reset-password', [ResetPasswordController::class, 'create'])->name('reset-password.create');
-    Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('reset-password');
+    Route::get('/reset-password', [ResetPasswordController::class, 'create'])->name('send-reset-password.create');
+    Route::post('/reset-password', [ResetPasswordController::class, 'sendResetPassword'])->name('send-reset-password');
 
-    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'getToken'])->name('reset-password.get-token');
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'resetPasswordCreate'])->name('reset-password.create');
+    Route::post('/reset-password/{token}', [ResetPasswordController::class, 'resetPassword'])->name('reset-password');
 });
 
 // Authorized user's route

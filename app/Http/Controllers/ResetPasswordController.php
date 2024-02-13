@@ -3,14 +3,59 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\SendResetPasswordRequest;
 use App\Mail\ResetPasswordMail;
+use App\Models\ResetPassword;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
+    /**
+     * Reset password functionality
+     */
+    public function sendResetPassword(SendResetPasswordRequest $request)
+    {
+        $request->validated();
+
+        $user = User::whereEmail($request->email)->first();
+
+        $token = $this->storeUserToken($user);
+
+        if (is_null($token)) {
+            return redirect()->back()->with('error', __('passwords.already_sent'));
+        }
+
+        Mail::to($user)->send(new ResetPasswordMail($token));
+
+        return redirect()->back()->with('success', __('passwords.sent'));
+    }
+
+    /**
+     * Save and get token inside reset password table
+     *
+     * @param $user
+     * @return string|null
+     */
+    private function storeUserToken($user)
+    {
+        $emailExists = ResetPassword::whereEmail($user->email)->exists();
+
+        if ($emailExists) {
+            return null;
+        }
+
+        $token = Str::random(60);
+
+        ResetPassword::create([
+            'email' => $user->email,
+            'token' => $token,
+        ]);
+
+        return $token;
+    }
+
     /**
      * Display a listing of the resource
      */
@@ -20,42 +65,52 @@ class ResetPasswordController extends Controller
     }
 
     /**
-     * Reset password functionality
+     * Reset password with token
+     *
+     * @param ResetPasswordRequest $request
+     * @param $token
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function resetPassword(ResetPasswordRequest $request)
+    public function resetPassword(ResetPasswordRequest $request, $token)
     {
         $request->validated();
 
-        $user = User::whereEmail($request->email)->first();
-        $token = $this->storeUserToken($user);
+        $user = $this->getUserByToken($token);
 
-        Mail::to($user)->send(new ResetPasswordMail($token));
+        $user->update([
+            'password' => bcrypt($request->password),
+        ]);
 
-        return redirect()->back()->with('success', __('passwords.sent'));
+        $this->deleteResetPasswordData($token);
+
+        return redirect()->route('login')->with('success', __('passwords.reset', ['email' => $user->email]));
     }
 
     /**
-     * Store user token in password resets table
+     * Get user by token
      *
-     * @param $user
-     * @return \Illuminate\Http\RedirectResponse|string
+     * @param $token
+     * @return User|\Illuminate\Http\RedirectResponse
      */
-    private function storeUserToken($user)
+    private function getUserByToken($token)
     {
-        // TODO: need to fix email exists if statement.
-        $emailExists = DB::table('password_reset_tokens')->whereEmail($user->email)->exists();
+        $userToken = ResetPassword::whereToken($token)->first();
 
-        if ($emailExists) {
-            return redirect()->back()->with('error', __('passwords.already_sent'));
+        if (!$userToken) {
+            return redirect()->back()->with('error', __('passwords.token'));
         }
 
-        $token = Str::random(60);
-
-        DB::table('password_reset_tokens')->insert([
-            'email' => $user->email,
-            'token' => $token,
-        ]);
-
-        return $token;
+        return User::whereEmail($userToken->email)->first();
     }
+
+    private function deleteResetPasswordData($token)
+    {
+        return ResetPassword::whereToken($token)->delete();
+    }
+
+    public function resetPasswordCreate($token)
+    {
+        return view('reset-password.update', ['token' => $token]);
+    }
+
 }
